@@ -1,6 +1,8 @@
 import cors from 'cors'
 import express from 'express'
 import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
+import userRouter from "./routes/users.js"
 
 const app = express()
 dotenv.config()
@@ -23,6 +25,8 @@ app.use((req, res, next) => {
 // 1 router för users
 // 1 router för channels
 // 1 router för DMs
+
+app.use("/api/users", userRouter)
 
 app.listen(port, () => {
 	console.log(`Server is listening on port ${port}...`);
