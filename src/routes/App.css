@@ -142,3 +142,14 @@ nav .unread {
 .align-right {
 	text-align: right;
 }
+
+.overlay {
+	border-radius: 1em;
+	padding: 2em 1em;
+}
+
+.overlay>form {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+}
