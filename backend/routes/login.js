@@ -1,8 +1,7 @@
 import express from "express"
 import { getDb } from "../data/database.js"
 import jwt from 'jsonwebtoken'
-import { log } from "console"
-// import { isValidId, isValidMessage, generateNewId } from "../utils/validation.js"
+
 
 const router = express.Router()
 const db = getDb()
