@@ -3,6 +3,8 @@ import express from 'express'
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
 import userRouter from "./routes/users.js"
+import channelRouter from "./routes/channels.js"
+import DMRouter from "./routes/directMessages.js"
 
 const app = express()
 dotenv.config()
@@ -27,6 +29,8 @@ app.use((req, res, next) => {
 // 1 router för DMs
 
 app.use("/api/users", userRouter)
+app.use("/api/channels", channelRouter)
+app.use("/api/directMessages", DMRouter)
 
 app.listen(port, () => {
 	console.log(`Server is listening on port ${port}...`);

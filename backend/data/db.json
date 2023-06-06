@@ -1,61 +1,71 @@
 {
-	"users": [
-		{
-			"username": "test",
-			"password": "password",
-			"id": 1
-		},
-		{
-			"username": "test2",
-			"password": "password2",
-			"id": 2
-		},
-		{
-			"username": "test 3",
-			"password": "password3",
-			"id": 3
-		}
-	],
-	"channels": [
-		{
-			"name": "chat 1",
-			"id": 1001,
-			"locked": false
-		},
-		{
-			"name": "chat 2",
-			"id": 1002,
-			"locked": true
-		},
-		{
-			"name": "chat 3",
-			"id": 1003,
-			"locked": false
-		},
-		{
-			"name": "chat 4",
-			"id": 1004,
-			"locked": true
-		}
-	],
-	"messages": [
-		{
-			"sender": 1,
-			"receiver": 1001,
-			"time": "12:31",
-			"message": "Hejsan Hoppsan"
-		},
-		{
-			"sender": 2,
-			"receiver": 1,
-			"time": "12:50",
-			"message": "Äppelpaj"
-		},
-		{
-			"sender": 2,
-			"receiver": 1001,
-			"time": "12:45",
-			"message": "Hej Svej"
-		}
-	]
+  "users": [
+    {
+      "username": "test",
+      "password": "password",
+      "id": 1
+    },
+    {
+      "username": "test2",
+      "password": "password2",
+      "id": 2
+    },
+    {
+      "username": "test 3",
+      "password": "password3",
+      "id": 3
+    }
+  ],
+  "channels": [
+    {
+      "name": "chat 1",
+      "id": 1001,
+      "locked": false
+    },
+    {
+      "name": "chat 2",
+      "id": 1002,
+      "locked": true
+    },
+    {
+      "name": "chat 3",
+      "id": 1003,
+      "locked": false
+    },
+    {
+      "name": "chat 4",
+      "id": 1004,
+      "locked": true
+    }
+  ],
+  "messages": [
+    {
+      "sender": 1,
+      "receiver": 1001,
+      "time": "2023-06-06 14:31:06",
+      "message": "Hejsan Hoppsan",
+      "id": 10001
+    },
+    {
+      "sender": 2,
+      "receiver": 1,
+      "time": "2023-06-06 14:36:57",
+      "message": "Äppelpaj",
+      "id": 10002
+    },
+    {
+      "sender": 2,
+      "receiver": 1001,
+      "time": "2023-06-06 14:43:26",
+      "message": "Hej Svej",
+      "id": 10003
+    },
+    {
+      "sender": 1,
+      "receiver": 2,
+      "message": "kulglass",
+      "time": "2023-06-06 14:49:47",
+      "id": 10004
+    }
+  ]
 }
