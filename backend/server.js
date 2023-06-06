@@ -1,10 +1,11 @@
 import cors from 'cors'
 import express from 'express'
 import dotenv from 'dotenv'
-import jwt from 'jsonwebtoken'
+// import jwt from 'jsonwebtoken'
 import userRouter from "./routes/users.js"
 import channelRouter from "./routes/channels.js"
 import DMRouter from "./routes/directMessages.js"
+import loginRouter from "./routes/login.js"
 
 const app = express()
 dotenv.config()
@@ -19,18 +20,11 @@ app.use((req, res, next) => {
 })
 
 
-// GET /users
-// GET /users/:id
-// GET /channels
-// GET /channels/:id
-
-// 1 router för users
-// 1 router för channels
-// 1 router för DMs
-
 app.use("/api/users", userRouter)
 app.use("/api/channels", channelRouter)
 app.use("/api/directMessages", DMRouter)
+app.use("/api/login", loginRouter)
+
 
 app.listen(port, () => {
 	console.log(`Server is listening on port ${port}...`);
