@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import authenticateAndAuthorize from './utils/authentication.js'
 import userRouter from "./routes/users.js"
 import channelRouter from "./routes/channels.js"
-import DMRouter from "./routes/directMessages.js"
+import messageRouter from "./routes/messages.js"
 import loginRouter from "./routes/login.js"
 import authRouter from "./routes/authenticated.js"
 
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 
 app.use("/api/users", userRouter)
 app.use("/api/channels", channelRouter)
-app.use("/api/directMessages", DMRouter)
+app.use("/api/messages", messageRouter)
 app.use("/api/login", loginRouter)
 app.use("/api/authenticated", authenticateAndAuthorize, authRouter)
 
