@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
 	const payload = { userId: found.id }
 	let token = jwt.sign(payload, secret, { expiresIn: 2 * hour })
 	console.log('Signed JWT: ', token);
-	let tokenPackage = { token: token }
+	let tokenPackage = { token: token, userId: found.id }
 	res.send(tokenPackage)
 })
 

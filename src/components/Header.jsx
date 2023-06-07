@@ -3,10 +3,12 @@ import loggedInAtom from "../recoil/loggedInAtom"
 import LoginForm from "./loginForm"
 import { useRef } from "react"
 import { ssKey } from "./loginForm"
+import userIdAtom from "../recoil/userIdAtom"
 
 
 const Header = () => {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
+	const [userId, setUserId] = useRecoilState(userIdAtom)
 	const overlay = useRef(null)
 
 	const handleLogin = () => {
@@ -16,6 +18,7 @@ const Header = () => {
 	const handleLogout = async () => {
 		sessionStorage.removeItem(ssKey)
 		setIsLoggedIn(false)
+		setUserId(null)
 	}
 
 	const handleClose = () => {

@@ -1,11 +1,13 @@
 import { useRecoilState } from "recoil"
 import loggedInAtom from "../recoil/loggedInAtom"
 import { useState, useEffect } from "react"
+import userIdAtom from "../recoil/userIdAtom"
 
 export const ssKey = 'chappy-jwt'
 
 const LoginForm = ({ onClose }) => {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
+	const [userId, setUserId] = useRecoilState(userIdAtom)
 	const [message, setMessage] = useState('')
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
@@ -34,9 +36,12 @@ const LoginForm = ({ onClose }) => {
 		}
 		const data = await response.json()
 		let jwt = data.token
+		let uId = data.userId
+		console.log('userId är: ', uId);
 		sessionStorage.setItem(ssKey, jwt)
 
 		setIsLoggedIn(true)
+		setUserId(uId)
 		onClose()
 	}
 
