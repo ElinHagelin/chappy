@@ -1,15 +1,28 @@
 import { useRecoilState } from "recoil"
 import loggedInAtom from "../recoil/loggedInAtom"
 import LoginForm from "./loginForm"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { ssKey } from "./loginForm"
 import userIdAtom from "../recoil/userIdAtom"
+import { getUsers } from "../utils/ajax/ajaxUsers"
+import usernameAtom from "../recoil/usernameAtom"
 
+export const getUserName = async (userId) => {
+	let allUsers = await getUsers()
+	console.log(allUsers);
+	console.log('userId är: ', userId);
+	let user = allUsers.find(user => user.id == userId)
+	console.log(user.username);
+	return user.username
+}
 
 const Header = () => {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
 	const [userId, setUserId] = useRecoilState(userIdAtom)
+	const [username, setUsername] = useRecoilState(usernameAtom)
 	const overlay = useRef(null)
+
+	console.log('username är: ', username);
 
 	const handleLogin = () => {
 		overlay.current.showModal()
@@ -19,6 +32,7 @@ const Header = () => {
 		sessionStorage.removeItem(ssKey)
 		setIsLoggedIn(false)
 		setUserId(null)
+		setUsername(null)
 	}
 
 	const handleClose = () => {
@@ -44,7 +58,7 @@ const Header = () => {
 				<div className="user-status">
 					{isLoggedIn ? (
 						<>
-							<span>Inloggad som VänligaVera</span>
+							<span>Inloggad som {username}</span>
 							<button onClick={handleLogout}> Logga ut </button>
 						</>
 					) : (
