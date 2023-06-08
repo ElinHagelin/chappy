@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { getChannels } from "../utils/ajax/ajaxChannels"
-import { getMessages } from "../utils/ajax/ajaxMessages";
+import { getMessagesWithId } from "../utils/ajax/ajaxMessages";
 import { useRecoilState } from "recoil";
 import loggedInAtom from "../recoil/loggedInAtom";
+import userIdAtom from "../recoil/userIdAtom";
+import { getUser } from "../utils/ajax/ajaxUsers";
+import { getUserName } from "./Header";
+import chatAtom from "../recoil/chatAtom";
 
 
 
@@ -12,7 +16,8 @@ const NavBar = () => {
 	const [DMs, setDMs] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("");
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
-	const [chats, setChats] = useState(null)
+	const [userId, setUserId] = useRecoilState(userIdAtom)
+	const [chats, setChats] = useRecoilState(chatAtom)
 
 	async function getAllChannels() {
 		setErrorMessage("");
@@ -26,13 +31,52 @@ const NavBar = () => {
 		}
 	}
 
+	async function getChatPals() {
+		try {
+			console.log('DMs är: ', DMs);
+			let DMList = []
+
+			await Promise.all(
+				DMs.map(async (message) => {
+					// console.log('Inne i forEach, DMList är: ', DMList);
+					if (message.sender == userId) {
+						// console.log('Användaren är avsändare');
+						const name = await getUserName(message.receiver)
+						if (DMList.indexOf(name) === -1) {
+							// console.log(`${name} finns inte med i listan`);
+							DMList = [...DMList, name]
+							// console.log(`Lagt till ${name}, DMList är: `, DMList);
+						}
+
+					} else if (message.receiver == userId) {
+						// console.log('Användaren är mottagare');
+						const name = await getUserName(message.sender)
+						if (DMList.indexOf(name) === -1) {
+							// console.log(`${name} finns inte med i listan`);
+							DMList = [...DMList, name]
+							// console.log(`Lagt till ${name}, DMList är: `, DMList);
+						}
+					}
+				})
+			)
+			// console.log('Utanför forEach, DMList är: ', DMList);
+			setChats(DMList)
+
+		} catch (error) {
+			console.log('getChatPals: ', error.message);
+		}
+		// console.log('chats är: ', chats);
+	}
+
 	async function getDMs() {
 		try {
-			let data = await getMessages()
-			console.log(`messages are: `, data);
-			setChats(data)
+			let data = await getMessagesWithId(userId)
+			let filteredData = data.filter(m => m.receiver < 1000)
+			console.log(`messages are: `, filteredData);
+			setDMs(filteredData)
+
 		} catch (error) {
-			console.log(error.message);
+			console.log('getDMs error: ', error.message);
 		}
 	}
 
@@ -41,9 +85,16 @@ const NavBar = () => {
 	}, [])
 
 	useEffect(() => {
-		getDMs()
-		console.log('chats är: ', chats);
-	}, [])
+		if (isLoggedIn) {
+			const fetchData = async () => {
+				await getDMs();
+				await getChatPals();
+			};
+
+			fetchData();
+			console.log('chats är: ', chats);
+		}
+	}, [isLoggedIn])
 
 	return (
 
@@ -61,15 +112,18 @@ const NavBar = () => {
 					))
 					: <p>Channels loading....</p>}
 				<hr />
-				<li title="Direktmeddelanden"> [DM] </li>
-				{isLoggedIn && chats ? (
+				{isLoggedIn &&
+					(<li title="Direktmeddelanden"> [DM] </li>)
+				}
+
+				{isLoggedIn && (chats.length !== 0) ? (
 					chats.map(c => (
-						<li>{c.message}</li>
+						<li key={c}>{c}</li>
 					))
 				)
-					: isLoggedIn && !chats ? (
+					: isLoggedIn && (chats.length === 0) ? (
 						<p>DM:s loading....</p>)
-						: null
+						: <p>No DM:s...</p>
 				}
 			</ul>
 		</nav>
