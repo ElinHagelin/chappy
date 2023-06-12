@@ -6,10 +6,14 @@
 // 	return data
 // }
 
-const getMessagesWithId = async (userId) => {
+const getMessagesWithId = async (userId, userId2) => {
 	const response = await fetch(`/api/messages/${userId}`)
-	const data = await response.json()
+	let data = await response.json()
+	if (userId2) {
+		data = data.filter(message => message.sender === userId2 || message.receiver === userId2)
+	}
 	return data
 }
+
 
 export { getMessagesWithId }

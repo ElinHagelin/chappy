@@ -8,6 +8,8 @@ import { getUser } from "../utils/ajax/ajaxUsers";
 import { getUserName } from "./Header";
 import chatAtom from "../recoil/chatAtom";
 import getDMs from "../utils/getDMs";
+import selectedChatIdAtom from "../recoil/selectedChatIdAtom";
+import selectedChatMessagesAtom from "../recoil/selectedChatMessagesAtom";
 
 
 
@@ -18,6 +20,8 @@ const NavBar = () => {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
 	const [userId, setUserId] = useRecoilState(userIdAtom)
 	const [chats, setChats] = useRecoilState(chatAtom)
+	const [selectedChatId, setSelectedChatId] = useRecoilState(selectedChatIdAtom)
+	const [chatMessages, setChatMessages] = useRecoilState(selectedChatMessagesAtom)
 
 	async function getAllChannels() {
 		setErrorMessage("");
@@ -29,6 +33,17 @@ const NavBar = () => {
 		} catch (error) {
 			setErrorMessage(error.message)
 		}
+	}
+
+	const handleChatClick = async (id, id2) => {
+		setSelectedChatId(id)
+		let messages = []
+		if (id2) {
+			messages = await getMessagesWithId(id, id2)
+		} else {
+			messages = await getMessagesWithId(id)
+		}
+		setChatMessages(messages)
 	}
 
 
@@ -54,12 +69,12 @@ const NavBar = () => {
 				<li> [Kanaler] </li>
 				{isLoggedIn && allChannels ? (
 					allChannels.map(channel => (
-						<li key={channel.id}>{channel.name}</li>
+						<li key={channel.id} onClick={() => handleChatClick(channel.id)}>{channel.name}</li>
 					))
 
 				) : !isLoggedIn && publicChannels ?
 					publicChannels.map(channel => (
-						<li key={channel.id}>{channel.name}</li>
+						<li key={channel.id} onClick={() => handleChatClick(channel.id)}>{channel.name}</li>
 					))
 					: <p>Channels loading....</p>}
 				<hr />
