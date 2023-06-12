@@ -1,41 +1,38 @@
 import { getMessagesWithId } from "./ajax/ajaxMessages";
 import { getUserName } from "../components/Header";
 
+
+
 async function getDMs(userId, setChats) {
 	try {
-		let data = await getMessagesWithId(userId)
-		let filteredData = data.filter(m => m.receiver < 1000)
-		console.log(`messages are: `, filteredData);
-		// setDMs(filteredData)
+		let data = await getMessagesWithId(userId);
+		let filteredData = data.filter((m) => m.receiver < 1000);
+		console.log('messages are: ', filteredData);
 
-		let DMList = []
+		let DMList = [];
 
 		await Promise.all(
 			filteredData.map(async (message) => {
-				// console.log('Inne i forEach, DMList är: ', DMList);
+				let id, name;
 				if (message.sender == userId) {
-					// console.log('Användaren är avsändare');
-					const name = await getUserName(message.receiver)
-					if (DMList.indexOf(name) === -1) {
-						// console.log(`${name} finns inte med i listan`);
-						DMList = [...DMList, name]
-						// console.log(`Lagt till ${name}, DMList är: `, DMList);
-					}
-
+					id = message.receiver;
+					name = await getUserName(message.receiver);
 				} else if (message.receiver == userId) {
-					// console.log('Användaren är mottagare');
-					const name = await getUserName(message.sender)
-					if (DMList.indexOf(name) === -1) {
-						// console.log(`${name} finns inte med i listan`);
-						DMList = [...DMList, name]
-						// console.log(`Lagt till ${name}, DMList är: `, DMList);
+					id = message.sender;
+					name = await getUserName(message.sender);
+				}
+
+				if (id && name) {
+					const existingDM = DMList.find((DM) => DM.id === id);
+					if (!existingDM) {
+						DMList.push({ id, name });
 					}
 				}
 			})
-		)
-		// console.log('Utanför forEach, DMList är: ', DMList);
-		setChats(DMList)
+		);
 
+		console.log('DMList is: ', DMList);
+		setChats(DMList);
 	} catch (error) {
 		console.log('getDMs error: ', error.message);
 	}

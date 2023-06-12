@@ -15,12 +15,14 @@ const getMessagesWithId = async (userId, userId2) => {
 	return data
 }
 
-const postMessage = async (userId, receiverId, message) => {
+const postMessage = async (receiverId, message, userId) => {
 
 	const baseUrl = "/api/messages"
 
+	let user = userId ? userId : 0
+
 	const newMessage = {
-		sender: userId,
+		sender: user,
 		receiver: receiverId,
 		message: message
 	}

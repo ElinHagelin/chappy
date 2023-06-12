@@ -6,9 +6,11 @@ import { getMessagesWithId, postMessage } from "../utils/ajax/ajaxMessages"
 import { useEffect, useState } from "react"
 import selectedChatMessagesAtom from "../recoil/selectedChatMessagesAtom"
 import { getUserName } from "./Header"
+import loggedInAtom from "../recoil/loggedInAtom"
 
 
 const Chat = () => {
+	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
 	const [userId, setUserId] = useRecoilState(userIdAtom)
 	const [selectedChatId, setSelectedChatId] = useRecoilState(selectedChatIdAtom)
 	const [chatMessages, setChatMessages] = useRecoilState(selectedChatMessagesAtom)
@@ -18,20 +20,34 @@ const Chat = () => {
 
 	async function getChatName() {
 		let channels = await getChannels()
-		let DMs = await getMessagesWithId(userId)
+		let isDM = null
+		if (userId) {
+			let DMs = await getMessagesWithId(userId)
+			isDM = DMs.filter(message => (message.sender === selectedChatId) || (message.receiver === selectedChatId))
+		}
 		let isChannel = channels.find(channel => channel.id === selectedChatId)
-		let isDM = DMs.find(DM => DM.id === selectedChatId)
 		if (isChannel) {
 			// console.log('vald kanal är: ', isChannel);
 			// console.log('vald kanals meddelanden är: ', chatMessages);
 			setSelectedChatName(isChannel.name)
 		} else if (isDM) {
+			// OM .sender är userId 
+			// - välj .receiver och ta fram namnet med getUserName()
+
+			// ANNARS 
+			// tvärtom
 			console.log('valt DM är: ', isDM);
 		}
 	}
 
 	const handleSubmit = () => {
-		postMessage(userId, selectedChatId, message)
+		// TODO: lägg till validering
+		if (isLoggedIn) {
+			postMessage(selectedChatId, message, userId)
+		} else {
+			postMessage(selectedChatId, message)
+		}
+		setMessage('')
 	}
 
 
@@ -39,10 +55,10 @@ const Chat = () => {
 		getChatName()
 	}, [selectedChatId])
 
-	useEffect(() => {
-		let senderNames = chatMessages.map(message => getUserName(message.sender))
-		// console.log('senderNames är: '), senderNames;
-	}, [chatMessages, selectedChatId]);
+	// useEffect(() => {
+	// 	// let senderNames = chatMessages.map(message => getUserName(message.sender))
+	// 	// console.log('senderNames är: '), senderNames;
+	// }, [chatMessages, selectedChatId]);
 
 	return (
 		<div className="chat-area">
@@ -51,13 +67,10 @@ const Chat = () => {
 			</section>
 			<section className="history">
 
-
-				{/* Kolla vilka meddelanden som användaren är avsändare till och sätt className="align-right" på dom.
-				className={sender === id ? "align-right" : null} */}
 				{chatMessages ?
 					chatMessages.map(message => (
 						<section className={message.sender === userId ? 'align-right' : null}>
-							<p> {message.sender}: {message.message} </p>
+							<p> {message.sender === 0 ? 'Anonym' : message.sender}: {message.message} </p>
 							<p> {message.time} </p>
 						</section>
 					)
@@ -65,7 +78,7 @@ const Chat = () => {
 
 			</section>
 			<section>
-				<input type="text" placeholder="Ditt meddelande..." vlaue={message} onChange={(e) => setMessage(e.target.value)} />
+				<input type="text" placeholder="Ditt meddelande..." value={message} onChange={(e) => setMessage(e.target.value)} />
 				<button onClick={handleSubmit}> Skicka </button>
 			</section>
 		</div>

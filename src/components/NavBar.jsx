@@ -84,7 +84,7 @@ const NavBar = () => {
 
 				{isLoggedIn && (chats.length !== 0) ? (
 					chats.map(c => (
-						<li className="chat" key={c}>{c}</li>
+						<li className="chat" key={c.id} onClick={() => handleChatClick(c.id, userId)}>{c.name}</li>
 					))
 				)
 					: isLoggedIn && (chats.length === 0) ? (
