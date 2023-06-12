@@ -5,8 +5,9 @@ import { useRef, useState } from "react"
 import { ssKey } from "./loginForm"
 import userIdAtom from "../recoil/userIdAtom"
 import { getUsers } from "../utils/ajax/ajaxUsers"
-import usernameAtom from "../recoil/usernameAtom"
+import loggedInUserAtom from "../recoil/loggedInUserAtom"
 import chatAtom from "../recoil/chatAtom"
+import loginMessageAtom from "../recoil/loginMessageAtom"
 
 export const getUserName = async (userId) => {
 	let allUsers = await getUsers()
@@ -20,9 +21,12 @@ export const getUserName = async (userId) => {
 const Header = () => {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
 	const [userId, setUserId] = useRecoilState(userIdAtom)
-	const [username, setUsername] = useRecoilState(usernameAtom)
+	const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserAtom)
 	const [chats, setChats] = useRecoilState(chatAtom)
+	const [message, setMessage] = useRecoilState(loginMessageAtom)
 	const overlay = useRef(null)
+	const [usernameInput, setUsernameInput] = useState('')
+	const [passwordInput, setPasswordInput] = useState('')
 
 	// console.log('username är: ', username);
 
@@ -34,11 +38,14 @@ const Header = () => {
 		sessionStorage.removeItem(ssKey)
 		setIsLoggedIn(false)
 		setUserId(null)
-		setUsername(null)
+		setLoggedInUser(null)
 		setChats([])
 	}
 
 	const handleClose = () => {
+		setMessage('')
+		setUsernameInput('')
+		setPasswordInput('')
 		overlay.current.close()
 	}
 
@@ -61,7 +68,7 @@ const Header = () => {
 				<div className="user-status">
 					{isLoggedIn ? (
 						<>
-							<span>Inloggad som {username}</span>
+							<span>Inloggad som {loggedInUser}</span>
 							<button onClick={handleLogout}> Logga ut </button>
 						</>
 					) : (
@@ -70,7 +77,7 @@ const Header = () => {
 				</div>
 			</header>
 			<dialog ref={overlay} className="overlay" onClick={e => { outsideClick(e) }}>
-				<LoginForm onClose={handleClose} />
+				<LoginForm onClose={handleClose} usernameInput={usernameInput} setUsernameInput={setUsernameInput} passwordInput={passwordInput} setPasswordInput={setPasswordInput} />
 			</dialog>
 		</>
 	)

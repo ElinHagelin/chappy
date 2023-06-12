@@ -153,3 +153,7 @@ nav .unread {
 	flex-direction: column;
 	gap: 1em;
 }
+
+.login-error {
+	min-height: 1.5em;
+}

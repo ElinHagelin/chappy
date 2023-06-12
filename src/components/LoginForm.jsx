@@ -2,18 +2,18 @@ import { useRecoilState } from "recoil"
 import loggedInAtom from "../recoil/loggedInAtom"
 import { useState, useEffect } from "react"
 import userIdAtom from "../recoil/userIdAtom"
-import usernameAtom from "../recoil/usernameAtom"
+import loggedInUserAtom from "../recoil/loggedInUserAtom"
 import { getUserName } from "./Header"
+import loginMessageAtom from "../recoil/loginMessageAtom"
 
 export const ssKey = 'chappy-jwt'
 
-const LoginForm = ({ onClose }) => {
+const LoginForm = ({ onClose, usernameInput, setUsernameInput, passwordInput, setPasswordInput }) => {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
 	const [userId, setUserId] = useRecoilState(userIdAtom)
-	const [username, setUsername] = useRecoilState(usernameAtom)
-	const [message, setMessage] = useState('')
-	const [usernameInput, setUsernameInput] = useState('')
-	const [passwordInput, setPasswordInput] = useState('')
+	const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserAtom)
+	const [message, setMessage] = useRecoilState(loginMessageAtom)
+
 
 	useEffect(() => {
 		if (sessionStorage.getItem(ssKey)) {
@@ -21,8 +21,10 @@ const LoginForm = ({ onClose }) => {
 		}
 	}, [])
 
+
 	const handleLogin = async () => {
 		let body = { username: usernameInput, password: passwordInput }
+		console.log('body är: ', body);
 		let options = {
 			method: 'POST',
 			headers: {
@@ -44,12 +46,14 @@ const LoginForm = ({ onClose }) => {
 		console.log('userId är: ', uId);
 		sessionStorage.setItem(ssKey, jwt)
 
+		setMessage('')
 		setIsLoggedIn(true)
 		setUserId(uId)
-		setUsername(uName)
+		setLoggedInUser(uName)
+		setUsernameInput('')
+		setPasswordInput('')
 		onClose()
 	}
-
 
 
 	return (
@@ -66,9 +70,12 @@ const LoginForm = ({ onClose }) => {
 				onChange={e => setPasswordInput(e.target.value)}
 				value={passwordInput}
 			/>
+			<span className='login-error'>{message ? message : null}</span>
 			<button type="button" onClick={handleLogin}> Logga in </button>
 		</form>
 	)
+
+
 }
 
 export default LoginForm
