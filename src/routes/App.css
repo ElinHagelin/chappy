@@ -157,3 +157,7 @@ nav .unread {
 .login-error {
 	min-height: 1.5em;
 }
+
+.chat {
+	cursor: pointer;
+}

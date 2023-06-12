@@ -15,5 +15,24 @@ const getMessagesWithId = async (userId, userId2) => {
 	return data
 }
 
+const postMessage = async (userId, receiverId, message) => {
 
-export { getMessagesWithId }
+	const baseUrl = "/api/messages"
+
+	const newMessage = {
+		sender: userId,
+		receiver: receiverId,
+		message: message
+	}
+
+	const options = {
+		method: 'POST',
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(newMessage)
+	}
+
+	const response = await fetch(baseUrl, options)
+}
+
+
+export { getMessagesWithId, postMessage }

@@ -115,6 +115,13 @@
       "message": "Wienerbröd",
       "time": "2023-06-07 15:44:16",
       "id": 10011
+    },
+    {
+      "sender": 2,
+      "receiver": 1004,
+      "message": "Kanelgiffel",
+      "time": "2023-06-12 13:57:54",
+      "id": 10012
     }
   ]
 }

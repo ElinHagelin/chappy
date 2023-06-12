@@ -69,12 +69,12 @@ const NavBar = () => {
 				<li> [Kanaler] </li>
 				{isLoggedIn && allChannels ? (
 					allChannels.map(channel => (
-						<li key={channel.id} onClick={() => handleChatClick(channel.id)}>{channel.name}</li>
+						<li className="chat" key={channel.id} onClick={() => handleChatClick(channel.id)}>{channel.name}</li>
 					))
 
 				) : !isLoggedIn && publicChannels ?
 					publicChannels.map(channel => (
-						<li key={channel.id} onClick={() => handleChatClick(channel.id)}>{channel.name}</li>
+						<li className="chat" key={channel.id} onClick={() => handleChatClick(channel.id)}>{channel.name}</li>
 					))
 					: <p>Channels loading....</p>}
 				<hr />
@@ -84,7 +84,7 @@ const NavBar = () => {
 
 				{isLoggedIn && (chats.length !== 0) ? (
 					chats.map(c => (
-						<li key={c}>{c}</li>
+						<li className="chat" key={c}>{c}</li>
 					))
 				)
 					: isLoggedIn && (chats.length === 0) ? (
