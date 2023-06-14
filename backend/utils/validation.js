@@ -62,4 +62,23 @@ async function isValidMessage(m) {
 	return true
 }
 
-export { isValidUser, generateNewId, isValidId, isValidMessage }
+async function isValidChannel(c) {
+	await db.read()
+
+	if (typeof m !== "object") {
+		return false
+	} else if (m === null) {
+		return false
+	}
+
+	let nameIsValid = typeof m.name === "string"
+	nameIsValid = nameIsValid && m.name !== ""
+	let lockedIsValid = typeof m.locked === "boolean"
+
+	if (!nameIsValid || !lockedIsValid) {
+		return false
+	}
+	return true
+}
+
+export { isValidUser, generateNewId, isValidId, isValidMessage, isValidChannel }

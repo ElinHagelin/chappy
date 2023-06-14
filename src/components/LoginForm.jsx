@@ -55,6 +55,15 @@ const LoginForm = ({ onClose, usernameInput, setUsernameInput, passwordInput, se
 		onClose()
 	}
 
+	const handleNewUser = () => {
+		console.log('skapa ny användare');
+
+		// TODO:
+		// Validering
+		// Kolla om användarnamnet redan finns
+		// - Ge återkoppling om att testa ett annat namn
+	}
+
 
 	return (
 		<form>
@@ -72,6 +81,7 @@ const LoginForm = ({ onClose, usernameInput, setUsernameInput, passwordInput, se
 			/>
 			<span className='login-error'>{message ? message : null}</span>
 			<button type="button" onClick={handleLogin}> Logga in </button>
+			<button type="button" onClick={handleNewUser}> Skapa ny användare </button>
 		</form>
 	)
 

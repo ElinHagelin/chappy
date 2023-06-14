@@ -20,22 +20,32 @@
     {
       "name": "chat 1",
       "id": 1001,
-      "locked": false
+      "locked": false,
+      "creator": 1
     },
     {
       "name": "chat 2",
       "id": 1002,
-      "locked": true
+      "locked": true,
+      "creator": 3
     },
     {
       "name": "chat 3",
       "id": 1003,
-      "locked": false
+      "locked": false,
+      "creator": 2
     },
     {
       "name": "chat 4",
       "id": 1004,
-      "locked": true
+      "locked": true,
+      "creator": 1
+    },
+    {
+      "name": "chat 5",
+      "locked": false,
+      "id": 1005,
+      "creator": 2
     }
   ],
   "messages": [
@@ -91,7 +101,7 @@
     {
       "sender": 1,
       "receiver": 1004,
-      "message": "Mazarin",
+      "message": "mazarin2",
       "time": "2023-06-07 15:42:09",
       "id": 10008
     },
@@ -101,13 +111,6 @@
       "message": "Päronbiskvi",
       "time": "2023-06-07 15:43:05",
       "id": 10009
-    },
-    {
-      "sender": 1,
-      "receiver": 3,
-      "message": "Croissant",
-      "time": "2023-06-07 15:43:40",
-      "id": 10010
     },
     {
       "sender": 3,
@@ -143,6 +146,48 @@
       "message": "Semla",
       "time": "2023-06-12 15:37:59",
       "id": 10015
+    },
+    {
+      "sender": 0,
+      "receiver": 1003,
+      "message": "kaka",
+      "time": "2023-06-14 11:25:13",
+      "id": 10016
+    },
+    {
+      "sender": 1,
+      "receiver": 3,
+      "message": "Hej hej",
+      "time": "2023-06-14 14:04:57",
+      "id": 10017
+    },
+    {
+      "sender": 1,
+      "receiver": 3,
+      "message": "test",
+      "time": "2023-06-14 14:05:06",
+      "id": 10018
+    },
+    {
+      "sender": 1,
+      "receiver": 1003,
+      "message": "Daimtårta",
+      "time": "2023-06-14 14:37:02",
+      "id": 10019
+    },
+    {
+      "sender": 1,
+      "receiver": 1002,
+      "message": "Marängsviss",
+      "time": "2023-06-14 14:37:28",
+      "id": 10020
+    },
+    {
+      "sender": 0,
+      "receiver": 1003,
+      "message": "hejhej",
+      "time": "2023-06-14 15:16:22",
+      "id": 10021
     }
   ]
 }

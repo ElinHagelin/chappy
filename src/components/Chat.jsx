@@ -18,6 +18,11 @@ const Chat = () => {
 	const [message, setMessage] = useState('')
 	const [editMode, setEditMode] = useState(false)
 	const [newMessage, setNewMessage] = useState('')
+	const [updateCount, setUpdateCount] = useState(0)
+
+	const updateChatComponent = () => {
+		setUpdateCount((prevCount) => prevCount + 1)
+	}
 
 	async function getChatName() {
 		let channels = await getChannels()
@@ -42,6 +47,13 @@ const Chat = () => {
 		if (editMode === messageId) {
 			setEditMode(null)
 			editMessage(messageId, newMessage)
+			// let newChatList = chatMessages.map(message => {
+			// 	console.log(message);
+			// 	if (message.id === messageId) {
+			// 		message.message = newMessage
+			// 	}
+			// })
+			// setChatMessages(newChatList)
 		} else {
 			setEditMode(messageId)
 		}
@@ -49,6 +61,9 @@ const Chat = () => {
 
 	const handleDelete = (messageId) => {
 		deleteMessage(messageId)
+		setChatMessages((prevMessages) =>
+			prevMessages.filter((message) => message.id !== messageId)
+		);
 	}
 
 	const handleSubmit = () => {
