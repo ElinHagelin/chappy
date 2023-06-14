@@ -21,7 +21,7 @@ const authenticateAndAuthorize = (async (req, res, next) => {
 		let userId = decoded.userId
 		let user = db.data.users.find(u => u.id === userId)
 		console.log(`User "${user.username}" has access to secret data.`)
-
+		req.user = user
 		next()
 	} catch (error) {
 		console.log('GET /secret error: ' + error.message);

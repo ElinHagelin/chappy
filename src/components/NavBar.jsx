@@ -52,7 +52,7 @@ const NavBar = () => {
 	}, [])
 
 	useEffect(() => {
-		if (isLoggedIn) {
+		if (isLoggedIn && userId) {
 			const fetchDMs = async () => {
 				await getDMs(userId, setChats);
 			};
@@ -60,7 +60,7 @@ const NavBar = () => {
 			fetchDMs();
 			console.log('chats är: ', chats);
 		}
-	}, [isLoggedIn])
+	}, [isLoggedIn, userId])
 
 	return (
 

@@ -13,4 +13,21 @@ const getUser = async (userId) => {
 	return data
 }
 
-export { getUsers, getUser }
+async function getUserFromJWT(ssKey, setIsLoggedIn, setUserId, setLoggedInUser) {
+	let JWTFromSS = sessionStorage.getItem(ssKey)
+	if (JWTFromSS) {
+		try {
+			let response = await fetch('/api/authenticated', { method: "GET", headers: { "Content-Type": "application/json", "Authorization": JWTFromSS } })
+			const data = await response.json()
+			console.log('userId i getUserFromJWT är: ', data);
+			setIsLoggedIn(true)
+			setUserId(data.id)
+			setLoggedInUser(data.username)
+
+		} catch (error) {
+			console.log('Kunde inte hämta användare');
+		}
+	}
+}
+
+export { getUsers, getUser, getUserFromJWT }

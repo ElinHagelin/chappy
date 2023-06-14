@@ -8,9 +8,14 @@ const secret = process.env.SECRET || 'ananas'
 
 
 router.get('/', (req, res) => {
-	res.send({
-		message: 'This is secret data. Because you are authenticated.'
-	});
+	console.log('Inne i hemlig data');
+	if (req.user) {
+		console.log(`${req.user.username} är inloggad`);
+	}
+	res.send(req.user)
+	// res.send({
+	// 	message: 'This is secret data. Because you are authenticated.'
+	// });
 })
 
 export default router
