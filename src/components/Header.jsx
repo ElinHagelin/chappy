@@ -1,13 +1,13 @@
 import { useRecoilState } from "recoil"
-import loggedInAtom from "../recoil/loggedInAtom"
-import LoginForm from "./loginForm"
+import loggedInAtom from "../recoil/loggedInAtom.js"
+import LoginForm from "./LoginForm.jsx"
 import { useRef, useState } from "react"
-import { ssKey } from "./loginForm"
-import userIdAtom from "../recoil/userIdAtom"
-import { getUsers } from "../utils/ajax/ajaxUsers"
-import loggedInUserAtom from "../recoil/loggedInUserAtom"
-import chatAtom from "../recoil/chatAtom"
-import loginMessageAtom from "../recoil/loginMessageAtom"
+import { ssKey } from "./LoginForm.jsx"
+import userIdAtom from "../recoil/userIdAtom.js"
+import { getUsers } from "../utils/ajax/ajaxUsers.js"
+import loggedInUserAtom from "../recoil/loggedInUserAtom.js"
+import chatAtom from "../recoil/chatAtom.js"
+import loginMessageAtom from "../recoil/loginMessageAtom.js"
 
 export const getUserName = async (userId) => {
 	let allUsers = await getUsers()

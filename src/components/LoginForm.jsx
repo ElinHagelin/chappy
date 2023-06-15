@@ -1,10 +1,10 @@
 import { useRecoilState } from "recoil"
-import loggedInAtom from "../recoil/loggedInAtom"
+import loggedInAtom from "../recoil/loggedInAtom.js"
 import { useState, useEffect } from "react"
-import userIdAtom from "../recoil/userIdAtom"
-import loggedInUserAtom from "../recoil/loggedInUserAtom"
-import { getUserName } from "./Header"
-import loginMessageAtom from "../recoil/loginMessageAtom"
+import userIdAtom from "../recoil/userIdAtom.js"
+import loggedInUserAtom from "../recoil/loggedInUserAtom.js"
+import { getUserName } from "./Header.jsx"
+import loginMessageAtom from "../recoil/loginMessageAtom.js"
 
 export const ssKey = 'chappy-jwt'
 

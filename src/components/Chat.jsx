@@ -1,12 +1,12 @@
 import { useRecoilState } from "recoil"
-import userIdAtom from "../recoil/userIdAtom"
-import selectedChatIdAtom from "../recoil/selectedChatIdAtom"
-import { getChannels } from "../utils/ajax/ajaxChannels"
-import { getMessagesWithId, postMessage, editMessage, deleteMessage } from "../utils/ajax/ajaxMessages"
+import userIdAtom from "../recoil/userIdAtom.js"
+import selectedChatIdAtom from "../recoil/selectedChatIdAtom.js"
+import { getChannels } from "../utils/ajax/ajaxChannels.js"
+import { getMessagesWithId, postMessage, editMessage, deleteMessage } from "../utils/ajax/ajaxMessages.js"
 import { useEffect, useState } from "react"
-import selectedChatMessagesAtom from "../recoil/selectedChatMessagesAtom"
-import { getUserName } from "./Header"
-import loggedInAtom from "../recoil/loggedInAtom"
+import selectedChatMessagesAtom from "../recoil/selectedChatMessagesAtom.js"
+import { getUserName } from "./Header.jsx"
+import loggedInAtom from "../recoil/loggedInAtom.js"
 
 
 const Chat = () => {

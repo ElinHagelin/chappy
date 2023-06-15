@@ -1,5 +1,5 @@
-import { getMessagesWithId } from "./ajax/ajaxMessages";
-import { getUserName } from "../components/Header";
+import { getMessagesWithId } from "./ajax/ajaxMessages.js";
+import { getUserName } from "../components/Header.jsx";
 
 
 

@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { getChannels } from "../utils/ajax/ajaxChannels"
-import { getMessagesWithId } from "../utils/ajax/ajaxMessages";
+import { getChannels } from "../utils/ajax/ajaxChannels.js"
+import { getMessagesWithId } from "../utils/ajax/ajaxMessages.js";
 import { useRecoilState } from "recoil";
-import loggedInAtom from "../recoil/loggedInAtom";
-import userIdAtom from "../recoil/userIdAtom";
-import { getUser } from "../utils/ajax/ajaxUsers";
-import { getUserName } from "./Header";
-import chatAtom from "../recoil/chatAtom";
-import getDMs from "../utils/getDMs";
-import selectedChatIdAtom from "../recoil/selectedChatIdAtom";
-import selectedChatMessagesAtom from "../recoil/selectedChatMessagesAtom";
+import loggedInAtom from "../recoil/loggedInAtom.js";
+import userIdAtom from "../recoil/userIdAtom.js";
+import { getUser } from "../utils/ajax/ajaxUsers.js";
+import { getUserName } from "./Header.jsx";
+import chatAtom from "../recoil/chatAtom.js";
+import getDMs from "../utils/getDMs.js";
+import selectedChatIdAtom from "../recoil/selectedChatIdAtom.js";
+import selectedChatMessagesAtom from "../recoil/selectedChatMessagesAtom.js";
 
 
 
