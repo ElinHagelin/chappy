@@ -163,13 +163,6 @@
     },
     {
       "sender": 1,
-      "receiver": 3,
-      "message": "test",
-      "time": "2023-06-14 14:05:06",
-      "id": 10018
-    },
-    {
-      "sender": 1,
       "receiver": 1003,
       "message": "Daimtårta",
       "time": "2023-06-14 14:37:02",

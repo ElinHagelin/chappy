@@ -7,6 +7,8 @@ import channelRouter from "./routes/channels.js"
 import messageRouter from "./routes/messages.js"
 import loginRouter from "./routes/login.js"
 import authRouter from "./routes/authenticated.js"
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
 
 const app = express()
 dotenv.config()
@@ -19,6 +21,9 @@ app.use((req, res, next) => {
 	next()
 })
 
+const whereWeAre = dirname(fileURLToPath(import.meta.url))
+const dist = join(whereWeAre, '../dist')
+app.use(express.static(dist))
 
 app.use("/api/users", userRouter)
 app.use("/api/channels", channelRouter)
@@ -26,6 +31,9 @@ app.use("/api/messages", messageRouter)
 app.use("/api/login", loginRouter)
 app.use("/api/authenticated", authenticateAndAuthorize, authRouter)
 
+app.get('*', (req, res) => {
+	res.sendFile(join(dist, 'index.html'))
+})
 
 app.listen(port, () => {
 	console.log(`Server is listening on port ${port}...`);
