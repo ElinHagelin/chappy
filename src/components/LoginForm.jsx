@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil"
 import loggedInAtom from "../recoil/loggedInAtom.js"
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { getUserName } from "./Header.jsx"
 import loginMessageAtom from "../recoil/loginMessageAtom.js"
 import { CheckIfUserIsValid, checkIfNewUser } from "../utils/validation.js"
@@ -35,7 +35,6 @@ const LoginForm = ({ onClose, usernameInput, setUsernameInput, passwordInput, se
 		}
 		let jwt = data.token
 		sessionStorage.setItem(ssKey, jwt)
-		console.log('data är: ', data);
 
 		const user = {
 			username: await getUserName(data.userId),
@@ -66,7 +65,6 @@ const LoginForm = ({ onClose, usernameInput, setUsernameInput, passwordInput, se
 	}
 
 	const handleEditUser = async () => {
-		console.log('Ändra profil');
 		let maybeUser = {
 			username: usernameInput,
 			password: passwordInput

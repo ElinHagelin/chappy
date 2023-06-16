@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "username": "test",
+      "username": "admin",
       "password": "password",
       "id": 1
     },
@@ -11,39 +11,9 @@
       "id": 2
     },
     {
-      "username": "test3",
-      "password": "password3",
+      "username": "Kalle",
+      "password": "kalleslösenord",
       "id": 3
-    },
-    {
-      "username": "test",
-      "password": "dxrftgyjhy",
-      "id": 4
-    },
-    {
-      "username": "test",
-      "password": "dxrftgyjhy",
-      "id": 5
-    },
-    {
-      "username": "test",
-      "password": "dxrftgyjhy",
-      "id": 6
-    },
-    {
-      "username": "test",
-      "password": "dxrftgyjhy",
-      "id": 7
-    },
-    {
-      "username": "test",
-      "password": "dxrftgyjhy",
-      "id": 8
-    },
-    {
-      "username": "test",
-      "password": "dxrftgyjhy",
-      "id": 9
     }
   ],
   "channels": [
@@ -81,7 +51,7 @@
   "messages": [
     {
       "sender": {
-        "username": "test",
+        "username": "admin",
         "id": 1
       },
       "receiver": 1001,
@@ -91,7 +61,7 @@
     },
     {
       "sender": {
-        "username": "test",
+        "username": "admin",
         "id": 1
       },
       "receiver": 1003,
@@ -101,7 +71,7 @@
     },
     {
       "sender": {
-        "username": "test",
+        "username": "admin",
         "id": 1
       },
       "receiver": 1005,
@@ -111,7 +81,7 @@
     },
     {
       "sender": {
-        "username": "test",
+        "username": "admin",
         "id": 1
       },
       "receiver": 2,
@@ -121,7 +91,7 @@
     },
     {
       "sender": {
-        "username": "test",
+        "username": "admin",
         "id": 1
       },
       "receiver": 2,
@@ -131,7 +101,7 @@
     },
     {
       "sender": {
-        "username": "test",
+        "username": "admin",
         "id": 1
       },
       "receiver": 3,
@@ -141,7 +111,7 @@
     },
     {
       "sender": {
-        "username": "test",
+        "username": "admin",
         "id": 1
       },
       "receiver": 1002,
@@ -151,7 +121,7 @@
     },
     {
       "sender": {
-        "username": "test2",
+        "username": "Elin",
         "id": 2
       },
       "receiver": 1001,
@@ -161,7 +131,7 @@
     },
     {
       "sender": {
-        "username": "test2",
+        "username": "Elin",
         "id": 2
       },
       "receiver": 1005,
@@ -171,7 +141,7 @@
     },
     {
       "sender": {
-        "username": "test2",
+        "username": "Elin",
         "id": 2
       },
       "receiver": 3,
@@ -181,7 +151,7 @@
     },
     {
       "sender": {
-        "username": "test2",
+        "username": "Elin",
         "id": 2
       },
       "receiver": 1,
@@ -191,7 +161,7 @@
     },
     {
       "sender": {
-        "username": "test2",
+        "username": "Elin",
         "id": 2
       },
       "receiver": 1003,
@@ -208,6 +178,46 @@
       "message": "Tjing Plingeling",
       "time": "2023-06-16 22:32:31",
       "id": 16
+    },
+    {
+      "sender": {
+        "username": "Kalle",
+        "id": 3
+      },
+      "receiver": 1005,
+      "message": "Snickarmacka",
+      "time": "2023-06-16 23:50:19",
+      "id": 17
+    },
+    {
+      "sender": {
+        "username": "Kalle",
+        "id": 3
+      },
+      "receiver": 1002,
+      "message": "Mumsmums",
+      "time": "2023-06-16 23:50:31",
+      "id": 18
+    },
+    {
+      "sender": {
+        "username": "Kalle",
+        "id": 3
+      },
+      "receiver": 1001,
+      "message": "Halli hallå!",
+      "time": "2023-06-16 23:51:15",
+      "id": 19
+    },
+    {
+      "sender": {
+        "username": "Kalle",
+        "id": 3
+      },
+      "receiver": 2,
+      "message": "Mars",
+      "time": "2023-06-16 23:51:52",
+      "id": 20
     }
   ]
 }
