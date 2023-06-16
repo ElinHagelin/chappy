@@ -1,72 +1,60 @@
 import { useRecoilState } from "recoil"
 import loggedInAtom from "../recoil/loggedInAtom.js"
 import { useState, useEffect } from "react"
-import userIdAtom from "../recoil/userIdAtom.js"
-import loggedInUserAtom from "../recoil/loggedInUserAtom.js"
 import { getUserName } from "./Header.jsx"
 import loginMessageAtom from "../recoil/loginMessageAtom.js"
 import { CheckIfUserIsValid, checkIfNewUser } from "../utils/validation.js"
-import { createNewUser, editUser } from "../utils/ajax/ajaxUsers.js"
+import { createNewUser, editUser, getUserFromJWT } from "../utils/ajax/ajaxUsers.js"
 import editUserAtom from "../recoil/editUserAtom.js"
+import login from "../utils/ajax/ajaxLogin.js"
 
 export const ssKey = 'chappy-jwt'
 
 const LoginForm = ({ onClose, usernameInput, setUsernameInput, passwordInput, setPasswordInput }) => {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
-	const [userId, setUserId] = useRecoilState(userIdAtom)
-	const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserAtom)
 	const [message, setMessage] = useRecoilState(loginMessageAtom)
 	const [editUserMode, setEditUserMode] = useRecoilState(editUserAtom)
 
 
 	useEffect(() => {
-		if (sessionStorage.getItem(ssKey)) {
-			setIsLoggedIn(true)
+		async function fetchUserFromJWT() {
+			if (sessionStorage.getItem(ssKey)) {
+				let user = await getUserFromJWT(ssKey)
+				setIsLoggedIn(user)
+			}
 		}
+		fetchUserFromJWT()
 	}, [])
 
 
 	const handleLogin = async () => {
-		let body = { username: usernameInput, password: passwordInput }
-		console.log('body är: ', body);
-		let options = {
-			method: 'POST',
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(body)
-		}
-
-		const response = await fetch('/api/login', options)
-		if (response.status !== 200) {
-			setMessage('Det gick inte att logga in!')
-			console.log('Login failed with status: ', response.status);
+		let data = await login(usernameInput, passwordInput)
+		if (!data) {
+			setMessage('Fel användarnamn eller lösenord!')
 			return
 		}
-		const data = await response.json()
 		let jwt = data.token
-		let uId = data.userId
-		let uName = await getUserName(uId)
-		console.log('userId är: ', uId);
 		sessionStorage.setItem(ssKey, jwt)
+		console.log('data är: ', data);
 
+		const user = {
+			username: await getUserName(data.userId),
+			id: data.userId
+		}
+		setIsLoggedIn(user)
 		setMessage('')
-		setIsLoggedIn(true)
-		setUserId(uId)
-		setLoggedInUser(uName)
 		setUsernameInput('')
 		setPasswordInput('')
 		onClose()
 	}
 
 	const handleNewUser = async () => {
-		console.log('skapa ny användare');
 		let maybeUser = {
 			username: usernameInput,
 			password: passwordInput
 		}
 		let userIsValid = CheckIfUserIsValid(maybeUser)
-		let userIsNew = checkIfNewUser(maybeUser)
+		let userIsNew = await checkIfNewUser(maybeUser)
 		if (!userIsValid) {
 			setMessage('Vänligen fyll i båda fälten')
 		} else if (!userIsNew) {
@@ -85,8 +73,12 @@ const LoginForm = ({ onClose, usernameInput, setUsernameInput, passwordInput, se
 		}
 		let userIsValid = CheckIfUserIsValid(maybeUser)
 		if (userIsValid) {
-			editUser(userId, maybeUser)
-			setLoggedInUser(maybeUser.username)
+			editUser(isLoggedIn.id, maybeUser)
+			let updatedUser = {
+				username: maybeUser.username,
+				id: isLoggedIn.id
+			}
+			setIsLoggedIn(updatedUser)
 			onClose()
 		} else {
 			setMessage('Vänligen fyll i båda fälten')

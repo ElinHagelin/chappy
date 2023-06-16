@@ -19,7 +19,7 @@ router.get("/:id", async (req, res) => {
 	let id = Number(req.params.id)
 
 	await db.read()
-	let maybeChats = db.data.messages.filter((message) => message.sender === id || message.receiver === id)
+	let maybeChats = db.data.messages.filter((message) => message.sender.id === id || message.receiver === id)
 	if (!maybeChats) {
 		res.sendStatus(404)
 		return

@@ -3,7 +3,7 @@ import { getUsers } from "./ajax/ajaxUsers";
 
 async function checkIfNewUser(u) {
 	let allUsers = await getUsers()
-	let check = allUsers.find(user => user.username === u.name)
+	let check = allUsers.find(user => user.username === u.username)
 	if (check) {
 		return false
 	}

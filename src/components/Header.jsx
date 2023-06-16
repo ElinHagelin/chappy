@@ -3,12 +3,12 @@ import loggedInAtom from "../recoil/loggedInAtom.js"
 import LoginForm from "./LoginForm.jsx"
 import { useRef, useState } from "react"
 import { ssKey } from "./LoginForm.jsx"
-import userIdAtom from "../recoil/userIdAtom.js"
 import { deleteUser, getUsers } from "../utils/ajax/ajaxUsers.js"
-import loggedInUserAtom from "../recoil/loggedInUserAtom.js"
 import chatAtom from "../recoil/chatAtom.js"
 import loginMessageAtom from "../recoil/loginMessageAtom.js"
 import editUserAtom from "../recoil/editUserAtom.js"
+import { deleteMessage, getMessagesWithId } from "../utils/ajax/ajaxMessages.js"
+import selectedChatMessagesAtom from "../recoil/selectedChatMessagesAtom.js"
 
 export const getUserName = async (userId) => {
 	let allUsers = await getUsers()
@@ -18,11 +18,10 @@ export const getUserName = async (userId) => {
 
 const Header = () => {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
-	const [userId, setUserId] = useRecoilState(userIdAtom)
-	const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserAtom)
 	const [chats, setChats] = useRecoilState(chatAtom)
 	const [message, setMessage] = useRecoilState(loginMessageAtom)
 	const [editUser, setEditUser] = useRecoilState(editUserAtom)
+	const [chatMessages, setChatMessages] = useRecoilState(selectedChatMessagesAtom)
 	const overlay = useRef(null)
 	const [usernameInput, setUsernameInput] = useState('')
 	const [passwordInput, setPasswordInput] = useState('')
@@ -34,19 +33,20 @@ const Header = () => {
 
 	const handleLogout = async () => {
 		sessionStorage.removeItem(ssKey)
-		setIsLoggedIn(false)
-		setUserId(null)
-		setLoggedInUser(null)
+		setIsLoggedIn(null)
 		setChats([])
+		setChatMessages([])
 	}
 
 	const handleEditClick = () => {
-		setEditUser(userId)
+		setEditUser(isLoggedIn.id)
 		handleOpenModal()
 	}
 
-	const handleDeleteUser = () => {
-		deleteUser(userId)
+	const handleDeleteUser = async () => {
+		deleteUser(isLoggedIn.id)
+		const messages = await getMessagesWithId(isLoggedIn.id)
+		messages.forEach(async (message) => await deleteMessage(message.id))
 		handleLogout()
 	}
 
@@ -77,11 +77,10 @@ const Header = () => {
 				<div className="user-status">
 					{isLoggedIn ? (
 						<>
-							<span>Inloggad som {loggedInUser}</span>
+							<span>Inloggad som {isLoggedIn.username}</span>
 							<button onClick={handleLogout}> Logga ut </button>
 							<button onClick={handleEditClick}> Ändra min profil </button>
-							<button onClick={() => handleDeleteUser(userId)}> Ta bort min profil </button>
-							{/* Lägg till en 'är du säker'-funktion på ta bort-knappen */}
+							<button onClick={handleDeleteUser}> Ta bort min profil </button>
 						</>
 					) : (
 						<button onClick={handleOpenModal}> Logga in </button>

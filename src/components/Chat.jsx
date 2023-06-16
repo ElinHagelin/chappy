@@ -1,5 +1,4 @@
 import { useRecoilState } from "recoil"
-import userIdAtom from "../recoil/userIdAtom.js"
 import selectedChatIdAtom from "../recoil/selectedChatIdAtom.js"
 import { getChannels } from "../utils/ajax/ajaxChannels.js"
 import { getMessagesWithId, postMessage, editMessage, deleteMessage } from "../utils/ajax/ajaxMessages.js"
@@ -11,35 +10,27 @@ import loggedInAtom from "../recoil/loggedInAtom.js"
 
 const Chat = () => {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInAtom)
-	const [userId, setUserId] = useRecoilState(userIdAtom)
 	const [selectedChatId, setSelectedChatId] = useRecoilState(selectedChatIdAtom)
 	const [chatMessages, setChatMessages] = useRecoilState(selectedChatMessagesAtom)
 	const [selectedChatName, setSelectedChatName] = useState('')
 	const [message, setMessage] = useState('')
 	const [editMode, setEditMode] = useState(null)
 	const [newMessage, setNewMessage] = useState('')
-	// const [updateCount, setUpdateCount] = useState(0)
 
-	// const updateChatComponent = () => {
-	// 	setUpdateCount((prevCount) => prevCount + 1)
-	// }
 
 	async function getChatName() {
 		let channels = await getChannels()
 		let isDM = null
-		if (userId) {
-			let DMs = await getMessagesWithId(userId)
+		if (isLoggedIn.id) {
+			let DMs = await getMessagesWithId(isLoggedIn.id)
 			isDM = DMs.filter(message => (message.sender === selectedChatId) || (message.receiver === selectedChatId))
 		}
 		let isChannel = channels.find(channel => channel.id === selectedChatId)
 		if (isChannel) {
-			// console.log('vald kanal är: ', isChannel);
-			// console.log('vald kanals meddelanden är: ', chatMessages);
 			setSelectedChatName(isChannel.name)
 		} else if (isDM) {
 			let username = await getUserName(selectedChatId)
 			setSelectedChatName(username)
-			// console.log('valt DM är: ', username);
 		}
 	}
 
@@ -52,7 +43,6 @@ const Chat = () => {
 			setEditMode(null)
 			await editMessage(messageId, newMessage)
 			let messages = await fetchMessages()
-			console.log('messages är: ', messages);
 			setChatMessages(messages)
 			setNewMessage('')
 		}
@@ -66,16 +56,16 @@ const Chat = () => {
 	}
 
 	const handleSubmit = async () => {
-		// TODO: lägg till validering
-		if (isLoggedIn) {
-			await postMessage(selectedChatId, message, userId)
+		if (message === '') {
+			return false
+		}
+		if (isLoggedIn !== null) {
+			await postMessage(selectedChatId, message, isLoggedIn)
 		} else {
 			await postMessage(selectedChatId, message)
 		}
 		setMessage('')
-		// setUpdateCount((prevCount) => prevCount + 1)
 		let messages = await fetchMessages()
-		console.log('messages är: ', messages);
 		setChatMessages(messages)
 	}
 
@@ -84,14 +74,11 @@ const Chat = () => {
 	}, [selectedChatId])
 
 	const fetchMessages = async () => {
-		// console.log('inne i fectchMessages');
 		let messages = []
 		if (selectedChatId > 1000) {
-			// console.log('inne i en kanal');
 			messages = await getMessagesWithId(selectedChatId)
 		} else {
-			// console.log('inne i ett DM');
-			messages = await getMessagesWithId(selectedChatId, userId)
+			messages = await getMessagesWithId(selectedChatId, isLoggedIn.id)
 		}
 		return messages
 	}
@@ -106,16 +93,16 @@ const Chat = () => {
 					</section>
 					<section className="history">
 
-						{chatMessages != [] ?
+						{chatMessages !== [] ?
 							chatMessages.map(message => (
-								<section key={message.id} className={message.sender === userId ? 'align-right' : null}>
-									<p> {message.sender === 0 ? 'Anonym' : message.sender}:
+								<section key={message.id} className={message.sender.id === isLoggedIn.id ? 'align-right' : null}>
+									<p> {message.sender.username}:
 										{editMode === message.id ? (<input type="text"
 											onChange={(e) => setNewMessage(e.target.value)}
-											value={newMessage}></input>)
+											value={newMessage} onBlur={() => setEditMode(false)}></input>)
 											: message.message} </p>
 									<p> {message.time} </p>
-									{message.sender === userId && (
+									{message.sender.id === isLoggedIn.id && (
 										<>
 											{editMode === message.id ? <button onClick={() => handleSave(message.id)}> Spara </button> : <button onClick={() => handleEdit(message.id)}> Redigera </button>}
 											<button onClick={() => handleDelete(message.id)}> Ta bort </button>
@@ -123,13 +110,14 @@ const Chat = () => {
 									)}
 								</section>
 							))
-							: chatMessages === [] ? <p>Här var det tomt, skicka ett meddelande för att börja chatta...</p>
-								: null}
+
+							: <p>Här var det tomt, skicka ett meddelande för att börja chatta...</p>
+						}
 
 					</section>
 					<section>
 						<input type="text" placeholder="Ditt meddelande..." value={message} onChange={(e) => setMessage(e.target.value)} />
-						<button onClick={handleSubmit}> Skicka </button>
+						<button onClick={async () => await handleSubmit()}> Skicka </button>
 					</section>
 				</>
 			)

@@ -6,14 +6,44 @@
       "id": 1
     },
     {
-      "username": "test2",
-      "password": "password2",
+      "username": "Elin",
+      "password": "elinslösenord",
       "id": 2
     },
     {
       "username": "test3",
       "password": "password3",
       "id": 3
+    },
+    {
+      "username": "test",
+      "password": "dxrftgyjhy",
+      "id": 4
+    },
+    {
+      "username": "test",
+      "password": "dxrftgyjhy",
+      "id": 5
+    },
+    {
+      "username": "test",
+      "password": "dxrftgyjhy",
+      "id": 6
+    },
+    {
+      "username": "test",
+      "password": "dxrftgyjhy",
+      "id": 7
+    },
+    {
+      "username": "test",
+      "password": "dxrftgyjhy",
+      "id": 8
+    },
+    {
+      "username": "test",
+      "password": "dxrftgyjhy",
+      "id": 9
     }
   ],
   "channels": [
@@ -50,221 +80,134 @@
   ],
   "messages": [
     {
-      "sender": 1,
+      "sender": {
+        "username": "test",
+        "id": 1
+      },
       "receiver": 1001,
-      "time": "2023-06-06 14:31:06",
-      "message": "Hejsan Hoppsan",
-      "id": 10001
-    },
-    {
-      "sender": 2,
-      "receiver": 1,
-      "time": "2023-06-06 14:36:57",
-      "message": "Äppelpaj",
-      "id": 10002
-    },
-    {
-      "sender": 2,
-      "receiver": 1001,
-      "time": "2023-06-06 14:43:26",
-      "message": "Hej Svej",
-      "id": 10003
-    },
-    {
-      "sender": 1,
-      "receiver": 2,
-      "message": "kulglass",
-      "time": "2023-06-06 14:49:47",
-      "id": 10004
-    },
-    {
-      "sender": 3,
-      "receiver": 1,
-      "message": "Sockerkaka",
-      "time": "2023-06-07 15:41:02",
-      "id": 10006
-    },
-    {
-      "sender": 3,
-      "receiver": 1003,
-      "message": "Chokladboll",
-      "time": "2023-06-07 15:41:37",
-      "id": 10007
-    },
-    {
-      "sender": 1,
-      "receiver": 1004,
-      "message": "mazarin2",
-      "time": "2023-06-07 15:42:09",
-      "id": 10008
-    },
-    {
-      "sender": 2,
-      "receiver": 1002,
-      "message": "Päronbiskvi",
-      "time": "2023-06-07 15:43:05",
-      "id": 10009
-    },
-    {
-      "sender": 3,
-      "receiver": 1,
-      "message": "Wienerbröd",
-      "time": "2023-06-07 15:44:16",
-      "id": 10011
-    },
-    {
-      "sender": 2,
-      "receiver": 1004,
-      "message": "Kanelgiffel",
-      "time": "2023-06-12 13:57:54",
-      "id": 10012
-    },
-    {
-      "sender": 0,
-      "receiver": 1003,
-      "message": "Hallongrotta",
-      "time": "2023-06-12 15:29:25",
-      "id": 10013
-    },
-    {
-      "sender": 3,
-      "receiver": 1004,
-      "message": "Mandelkubb",
-      "time": "2023-06-12 15:35:54",
-      "id": 10014
-    },
-    {
-      "sender": 3,
-      "receiver": 1003,
-      "message": "Semla",
-      "time": "2023-06-12 15:37:59",
-      "id": 10015
-    },
-    {
-      "sender": 0,
-      "receiver": 1003,
-      "message": "kaka",
-      "time": "2023-06-14 11:25:13",
-      "id": 10016
-    },
-    {
-      "sender": 1,
-      "receiver": 3,
       "message": "Hej hej",
-      "time": "2023-06-14 14:04:57",
-      "id": 10017
+      "time": "2023-06-16 20:51:17",
+      "id": 1
     },
     {
-      "sender": 1,
+      "sender": {
+        "username": "test",
+        "id": 1
+      },
       "receiver": 1003,
-      "message": "Daimtårta",
-      "time": "2023-06-14 14:37:02",
-      "id": 10019
+      "message": "Kanelbulle",
+      "time": "2023-06-16 20:53:12",
+      "id": 2
     },
     {
-      "sender": 1,
+      "sender": {
+        "username": "test",
+        "id": 1
+      },
+      "receiver": 1005,
+      "message": "Mazarin",
+      "time": "2023-06-16 20:53:22",
+      "id": 3
+    },
+    {
+      "sender": {
+        "username": "test",
+        "id": 1
+      },
+      "receiver": 2,
+      "message": "Strösseltårta",
+      "time": "2023-06-16 20:58:40",
+      "id": 4
+    },
+    {
+      "sender": {
+        "username": "test",
+        "id": 1
+      },
+      "receiver": 2,
+      "message": "hejhej",
+      "time": "2023-06-16 21:05:39",
+      "id": 8
+    },
+    {
+      "sender": {
+        "username": "test",
+        "id": 1
+      },
+      "receiver": 3,
+      "message": "halloj",
+      "time": "2023-06-16 22:01:09",
+      "id": 9
+    },
+    {
+      "sender": {
+        "username": "test",
+        "id": 1
+      },
       "receiver": 1002,
       "message": "Marängsviss",
-      "time": "2023-06-14 14:37:28",
-      "id": 10020
+      "time": "2023-06-16 22:02:25",
+      "id": 10
     },
     {
-      "sender": 0,
+      "sender": {
+        "username": "test2",
+        "id": 2
+      },
+      "receiver": 1001,
+      "message": "Tjolahopp",
+      "time": "2023-06-16 22:22:26",
+      "id": 11
+    },
+    {
+      "sender": {
+        "username": "test2",
+        "id": 2
+      },
+      "receiver": 1005,
+      "message": "Citronruta",
+      "time": "2023-06-16 22:24:05",
+      "id": 12
+    },
+    {
+      "sender": {
+        "username": "test2",
+        "id": 2
+      },
+      "receiver": 3,
+      "message": "Snickers",
+      "time": "2023-06-16 22:24:35",
+      "id": 13
+    },
+    {
+      "sender": {
+        "username": "test2",
+        "id": 2
+      },
+      "receiver": 1,
+      "message": "Solbulle",
+      "time": "2023-06-16 22:24:58",
+      "id": 14
+    },
+    {
+      "sender": {
+        "username": "test2",
+        "id": 2
+      },
       "receiver": 1003,
-      "message": "hejhej",
-      "time": "2023-06-14 15:16:22",
-      "id": 10021
+      "message": "Vaniljmunk",
+      "time": "2023-06-16 22:25:46",
+      "id": 15
     },
     {
-      "sender": 0,
-      "receiver": 1005,
-      "message": "testing testing",
-      "time": "2023-06-16 15:18:05",
-      "id": 10022
-    },
-    {
-      "sender": 0,
-      "receiver": 1005,
-      "message": "testar igen",
-      "time": "2023-06-16 15:20:07",
-      "id": 10023
-    },
-    {
-      "sender": 0,
-      "receiver": 1005,
-      "message": "bla bla",
-      "time": "2023-06-16 15:29:13",
-      "id": 10024
-    },
-    {
-      "sender": 0,
-      "receiver": 1005,
-      "message": "<srgzedrfg",
-      "time": "2023-06-16 15:30:16",
-      "id": 10025
-    },
-    {
-      "sender": 0,
-      "receiver": 1005,
-      "message": "zerdtyhxr",
-      "time": "2023-06-16 15:35:21",
-      "id": 10026
-    },
-    {
-      "sender": 0,
-      "receiver": 1005,
-      "message": "tyjyuhjk",
-      "time": "2023-06-16 15:37:19",
-      "id": 10027
-    },
-    {
-      "sender": 0,
-      "receiver": 1005,
-      "message": "yujktguyhj",
-      "time": "2023-06-16 15:40:04",
-      "id": 10028
-    },
-    {
-      "sender": 0,
-      "receiver": 1005,
-      "message": "tyjutyhj",
-      "time": "2023-06-16 15:43:55",
-      "id": 10029
-    },
-    {
-      "sender": 0,
-      "receiver": 1005,
-      "message": "tdyjdtyj",
-      "time": "2023-06-16 15:48:17",
-      "id": 10030
-    },
-    {
-      "sender": 0,
-      "receiver": 1005,
-      "message": "ytukjiytu7k",
-      "time": "2023-06-16 15:48:20",
-      "id": 10031
-    },
-    {
-      "sender": 1,
-      "receiver": 1004,
-      "message": "uyikgyuio",
-      "time": "2023-06-16 16:33:38",
-      "id": 10033
-    },
-    {
-      "sender": 1,
-      "receiver": 3,
-      "message": "yhukyhu",
-      "time": "2023-06-16 16:40:02",
-      "id": 10048
-    },
-    {
-      "sender": 2,
-      "receiver": 3,
-      "message": "srtyhgdsrt",
-      "time": "2023-06-16 18:04:54",
-      "id": 10049
+      "sender": {
+        "username": "Anonym",
+        "id": 0
+      },
+      "receiver": 1001,
+      "message": "Tjing Plingeling",
+      "time": "2023-06-16 22:32:31",
+      "id": 16
     }
   ]
 }
