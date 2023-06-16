@@ -4,17 +4,15 @@ import LoginForm from "./LoginForm.jsx"
 import { useRef, useState } from "react"
 import { ssKey } from "./LoginForm.jsx"
 import userIdAtom from "../recoil/userIdAtom.js"
-import { getUsers } from "../utils/ajax/ajaxUsers.js"
+import { deleteUser, getUsers } from "../utils/ajax/ajaxUsers.js"
 import loggedInUserAtom from "../recoil/loggedInUserAtom.js"
 import chatAtom from "../recoil/chatAtom.js"
 import loginMessageAtom from "../recoil/loginMessageAtom.js"
+import editUserAtom from "../recoil/editUserAtom.js"
 
 export const getUserName = async (userId) => {
 	let allUsers = await getUsers()
-	// console.log(allUsers);
-	// console.log('userId är: ', userId);
 	let user = allUsers.find(user => user.id == userId)
-	// console.log('username är: ', user.username);
 	return user.username
 }
 
@@ -24,13 +22,13 @@ const Header = () => {
 	const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserAtom)
 	const [chats, setChats] = useRecoilState(chatAtom)
 	const [message, setMessage] = useRecoilState(loginMessageAtom)
+	const [editUser, setEditUser] = useRecoilState(editUserAtom)
 	const overlay = useRef(null)
 	const [usernameInput, setUsernameInput] = useState('')
 	const [passwordInput, setPasswordInput] = useState('')
 
-	// console.log('username är: ', username);
 
-	const handleLogin = () => {
+	const handleOpenModal = () => {
 		overlay.current.showModal()
 	}
 
@@ -42,10 +40,21 @@ const Header = () => {
 		setChats([])
 	}
 
+	const handleEditClick = () => {
+		setEditUser(userId)
+		handleOpenModal()
+	}
+
+	const handleDeleteUser = () => {
+		deleteUser(userId)
+		handleLogout()
+	}
+
 	const handleClose = () => {
 		setMessage('')
 		setUsernameInput('')
 		setPasswordInput('')
+		setEditUser(null)
 		overlay.current.close()
 	}
 
@@ -70,9 +79,12 @@ const Header = () => {
 						<>
 							<span>Inloggad som {loggedInUser}</span>
 							<button onClick={handleLogout}> Logga ut </button>
+							<button onClick={handleEditClick}> Ändra min profil </button>
+							<button onClick={() => handleDeleteUser(userId)}> Ta bort min profil </button>
+							{/* Lägg till en 'är du säker'-funktion på ta bort-knappen */}
 						</>
 					) : (
-						<button onClick={handleLogin}> Logga in </button>
+						<button onClick={handleOpenModal}> Logga in </button>
 					)}
 				</div>
 			</header>

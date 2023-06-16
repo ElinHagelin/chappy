@@ -5,6 +5,9 @@ import userIdAtom from "../recoil/userIdAtom.js"
 import loggedInUserAtom from "../recoil/loggedInUserAtom.js"
 import { getUserName } from "./Header.jsx"
 import loginMessageAtom from "../recoil/loginMessageAtom.js"
+import { CheckIfUserIsValid, checkIfNewUser } from "../utils/validation.js"
+import { createNewUser, editUser } from "../utils/ajax/ajaxUsers.js"
+import editUserAtom from "../recoil/editUserAtom.js"
 
 export const ssKey = 'chappy-jwt'
 
@@ -13,6 +16,7 @@ const LoginForm = ({ onClose, usernameInput, setUsernameInput, passwordInput, se
 	const [userId, setUserId] = useRecoilState(userIdAtom)
 	const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserAtom)
 	const [message, setMessage] = useRecoilState(loginMessageAtom)
+	const [editUserMode, setEditUserMode] = useRecoilState(editUserAtom)
 
 
 	useEffect(() => {
@@ -55,13 +59,38 @@ const LoginForm = ({ onClose, usernameInput, setUsernameInput, passwordInput, se
 		onClose()
 	}
 
-	const handleNewUser = () => {
+	const handleNewUser = async () => {
 		console.log('skapa ny användare');
+		let maybeUser = {
+			username: usernameInput,
+			password: passwordInput
+		}
+		let userIsValid = CheckIfUserIsValid(maybeUser)
+		let userIsNew = checkIfNewUser(maybeUser)
+		if (!userIsValid) {
+			setMessage('Vänligen fyll i båda fälten')
+		} else if (!userIsNew) {
+			setMessage('Användarnamnet är upptaget')
+		} else if (userIsValid && userIsNew) {
+			await createNewUser(maybeUser)
+			await handleLogin()
+		}
+	}
 
-		// TODO:
-		// Validering
-		// Kolla om användarnamnet redan finns
-		// - Ge återkoppling om att testa ett annat namn
+	const handleEditUser = async () => {
+		console.log('Ändra profil');
+		let maybeUser = {
+			username: usernameInput,
+			password: passwordInput
+		}
+		let userIsValid = CheckIfUserIsValid(maybeUser)
+		if (userIsValid) {
+			editUser(userId, maybeUser)
+			setLoggedInUser(maybeUser.username)
+			onClose()
+		} else {
+			setMessage('Vänligen fyll i båda fälten')
+		}
 	}
 
 
@@ -80,8 +109,15 @@ const LoginForm = ({ onClose, usernameInput, setUsernameInput, passwordInput, se
 				value={passwordInput}
 			/>
 			<span className='login-error'>{message ? message : null}</span>
-			<button type="button" onClick={handleLogin}> Logga in </button>
-			<button type="button" onClick={handleNewUser}> Skapa ny användare </button>
+			{editUserMode ? (
+				<button type="button" onClick={handleEditUser}> Spara </button>
+			)
+				: (
+					<>
+						<button type="button" onClick={handleLogin}> Logga in </button>
+						<button type="button" onClick={handleNewUser}> Skapa ny användare </button>
+					</>
+				)}
 		</form>
 	)
 

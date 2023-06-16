@@ -39,14 +39,9 @@ async function getUserFromJWT(ssKey, setIsLoggedIn, setUserId, setLoggedInUser) 
 	}
 }
 
-async function createNewUser(username, password) {
+async function createNewUser(newUser) {
 	try {
 		const baseUrl = "/api/users"
-
-		const newUser = {
-			username: username,
-			password: password,
-		}
 
 		const options = {
 			method: 'POST',
@@ -65,4 +60,47 @@ async function createNewUser(username, password) {
 	}
 }
 
-export { getUsers, getUser, getUserFromJWT, createNewUser }
+const deleteUser = async (userId) => {
+	try {
+		const url = `/api/users/${userId}`
+
+		const options = {
+			method: "DELETE",
+		}
+
+		const response = await fetch(url, options)
+		console.log("success")
+		return true
+	}
+
+	catch (error) {
+		console.log("Delete status failed: ", response)
+		return false
+	}
+
+}
+
+const editUser = async (userId, updatedUser) => {
+	try {
+		const url = `/api/users/${userId}`
+
+		// let allUsers = await getUser()
+		// const targetUser = allUsers.find(user => user.id === userId)
+
+		const body = updatedUser
+
+		const options = {
+			method: 'PUT',
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(body)
+		}
+
+		let response = await fetch(url, options)
+		console.log(response)
+
+	} catch (error) {
+		console.log('Edit status failed');
+	}
+}
+
+export { getUsers, getUser, getUserFromJWT, createNewUser, deleteUser, editUser }
