@@ -161,3 +161,7 @@ nav .unread {
 .chat {
 	cursor: pointer;
 }
+
+.search-input {
+	margin-top: 1em;
+}

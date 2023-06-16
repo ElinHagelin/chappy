@@ -16,13 +16,13 @@ const Chat = () => {
 	const [chatMessages, setChatMessages] = useRecoilState(selectedChatMessagesAtom)
 	const [selectedChatName, setSelectedChatName] = useState('')
 	const [message, setMessage] = useState('')
-	const [editMode, setEditMode] = useState(false)
+	const [editMode, setEditMode] = useState(null)
 	const [newMessage, setNewMessage] = useState('')
-	const [updateCount, setUpdateCount] = useState(0)
+	// const [updateCount, setUpdateCount] = useState(0)
 
-	const updateChatComponent = () => {
-		setUpdateCount((prevCount) => prevCount + 1)
-	}
+	// const updateChatComponent = () => {
+	// 	setUpdateCount((prevCount) => prevCount + 1)
+	// }
 
 	async function getChatName() {
 		let channels = await getChannels()
@@ -44,18 +44,17 @@ const Chat = () => {
 	}
 
 	const handleEdit = async (messageId) => {
-		if (editMode === messageId) {
+		setEditMode(messageId)
+	}
+
+	const handleSave = async (messageId) => {
+		if (newMessage !== '') {
 			setEditMode(null)
-			editMessage(messageId, newMessage)
-			// let newChatList = chatMessages.map(message => {
-			// 	console.log(message);
-			// 	if (message.id === messageId) {
-			// 		message.message = newMessage
-			// 	}
-			// })
-			// setChatMessages(newChatList)
-		} else {
-			setEditMode(messageId)
+			await editMessage(messageId, newMessage)
+			let messages = await fetchMessages()
+			console.log('messages är: ', messages);
+			setChatMessages(messages)
+			setNewMessage('')
 		}
 	}
 
@@ -66,20 +65,36 @@ const Chat = () => {
 		);
 	}
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		// TODO: lägg till validering
 		if (isLoggedIn) {
-			postMessage(selectedChatId, message, userId)
+			await postMessage(selectedChatId, message, userId)
 		} else {
-			postMessage(selectedChatId, message)
+			await postMessage(selectedChatId, message)
 		}
 		setMessage('')
+		// setUpdateCount((prevCount) => prevCount + 1)
+		let messages = await fetchMessages()
+		console.log('messages är: ', messages);
+		setChatMessages(messages)
 	}
-
 
 	useEffect(() => {
 		getChatName()
 	}, [selectedChatId])
+
+	const fetchMessages = async () => {
+		// console.log('inne i fectchMessages');
+		let messages = []
+		if (selectedChatId > 1000) {
+			// console.log('inne i en kanal');
+			messages = await getMessagesWithId(selectedChatId)
+		} else {
+			// console.log('inne i ett DM');
+			messages = await getMessagesWithId(selectedChatId, userId)
+		}
+		return messages
+	}
 
 
 	return (
@@ -91,7 +106,7 @@ const Chat = () => {
 					</section>
 					<section className="history">
 
-						{chatMessages ?
+						{chatMessages != [] ?
 							chatMessages.map(message => (
 								<section key={message.id} className={message.sender === userId ? 'align-right' : null}>
 									<p> {message.sender === 0 ? 'Anonym' : message.sender}:
@@ -102,13 +117,14 @@ const Chat = () => {
 									<p> {message.time} </p>
 									{message.sender === userId && (
 										<>
-											<button onClick={() => handleEdit(message.id)}> Redigera </button>
+											{editMode === message.id ? <button onClick={() => handleSave(message.id)}> Spara </button> : <button onClick={() => handleEdit(message.id)}> Redigera </button>}
 											<button onClick={() => handleDelete(message.id)}> Ta bort </button>
 										</>
 									)}
 								</section>
-							)
-							) : <p>No messages yet...</p>}
+							))
+							: chatMessages === [] ? <p>Här var det tomt, skicka ett meddelande för att börja chatta...</p>
+								: null}
 
 					</section>
 					<section>

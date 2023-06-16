@@ -78,13 +78,6 @@
       "id": 10004
     },
     {
-      "sender": 2,
-      "receiver": 3,
-      "message": "citronmuffin",
-      "time": "2023-06-07 15:40:40",
-      "id": 10005
-    },
-    {
       "sender": 3,
       "receiver": 1,
       "message": "Sockerkaka",
@@ -181,6 +174,97 @@
       "message": "hejhej",
       "time": "2023-06-14 15:16:22",
       "id": 10021
+    },
+    {
+      "sender": 0,
+      "receiver": 1005,
+      "message": "testing testing",
+      "time": "2023-06-16 15:18:05",
+      "id": 10022
+    },
+    {
+      "sender": 0,
+      "receiver": 1005,
+      "message": "testar igen",
+      "time": "2023-06-16 15:20:07",
+      "id": 10023
+    },
+    {
+      "sender": 0,
+      "receiver": 1005,
+      "message": "bla bla",
+      "time": "2023-06-16 15:29:13",
+      "id": 10024
+    },
+    {
+      "sender": 0,
+      "receiver": 1005,
+      "message": "<srgzedrfg",
+      "time": "2023-06-16 15:30:16",
+      "id": 10025
+    },
+    {
+      "sender": 0,
+      "receiver": 1005,
+      "message": "zerdtyhxr",
+      "time": "2023-06-16 15:35:21",
+      "id": 10026
+    },
+    {
+      "sender": 0,
+      "receiver": 1005,
+      "message": "tyjyuhjk",
+      "time": "2023-06-16 15:37:19",
+      "id": 10027
+    },
+    {
+      "sender": 0,
+      "receiver": 1005,
+      "message": "yujktguyhj",
+      "time": "2023-06-16 15:40:04",
+      "id": 10028
+    },
+    {
+      "sender": 0,
+      "receiver": 1005,
+      "message": "tyjutyhj",
+      "time": "2023-06-16 15:43:55",
+      "id": 10029
+    },
+    {
+      "sender": 0,
+      "receiver": 1005,
+      "message": "tdyjdtyj",
+      "time": "2023-06-16 15:48:17",
+      "id": 10030
+    },
+    {
+      "sender": 0,
+      "receiver": 1005,
+      "message": "ytukjiytu7k",
+      "time": "2023-06-16 15:48:20",
+      "id": 10031
+    },
+    {
+      "sender": 1,
+      "receiver": 1004,
+      "message": "uyikgyuio",
+      "time": "2023-06-16 16:33:38",
+      "id": 10033
+    },
+    {
+      "sender": 1,
+      "receiver": 3,
+      "message": "yhukyhu",
+      "time": "2023-06-16 16:40:02",
+      "id": 10048
+    },
+    {
+      "sender": 2,
+      "receiver": 3,
+      "message": "srtyhgdsrt",
+      "time": "2023-06-16 18:04:54",
+      "id": 10049
     }
   ]
 }
